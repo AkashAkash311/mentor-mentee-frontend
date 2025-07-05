@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { presistStore, persistReducer} from "redux-persist"
+import { persistStore , persistReducer} from "redux-persist"
 import createSagaMiddleware from "redux-saga";
 import storage from "redux-persist/lib/storage";
 
@@ -27,7 +27,7 @@ const store = configureStore({
 
 sagaMiddleware.run(rootSaga);
 
-let persistor = presistStore(store);
+let persistor = persistStore (store);
 
 const { dispatch } = store;
 
