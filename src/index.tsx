@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider as ReduxProvider } from 'react-redux';
+// import { Provider as ReduxProvider } from 'react-redux';
 import { HistoryRouter as Router} from "redux-first-history/rr6";
 
 import { store, history, persistor } from "store"
@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <ReduxProvider store={store} >
+  // <ReduxProvider store={store} >
     <Router history={history}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
@@ -22,7 +22,7 @@ root.render(
         </BrowserRouter>
       </PersistGate>
     </Router>
-  </ReduxProvider>
+  // </ReduxProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
