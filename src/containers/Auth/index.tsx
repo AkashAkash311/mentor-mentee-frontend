@@ -4,25 +4,42 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
+import { IRootType } from '@/store/storeType';
 import { GraduationCap, Lock, LogIn, Mail, User, UserPlus, Users } from 'lucide-react'
 import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { setDetail } from './reducer';
+import { toast } from 'react-toastify';
 
-const Index = () => {
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+const Index: React.FC = () => {
+  const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    role: '',
-    rememberMe: false,
-    agreeToTerms: false
-  });
+  const { booleanToggles, loginSlice, registerSlice } = useSelector((state: IRootType) => state.auth);
 
-  const handleSubmit = () => {};
-  const handleInputChange = (name: string, value: any) => {};
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const payload = {
+      email: registerSlice.email,
+      password: registerSlice.password
+    }
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/v1/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      toast.error(data.msg)
+    } catch (error) {
+      console.error('API Error:', error);
+    }
+  };
+  const handleInputChange = (name: string, value: any, key: any): void => {
+    dispatch(setDetail({key: key, name: name, value: value}));
+  };
 
   return(
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
@@ -45,7 +62,7 @@ const Index = () => {
           <Card className="border-gray-800 bg-gray-900/50 backdrop-blur-sm">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl text-white flex items-center justify-center">
-                {isLogin ? (
+                {booleanToggles.isLogin ? (
                   <>
                     <LogIn className="h-6 w-6 mr-2" />
                     Welcome Back
@@ -58,7 +75,7 @@ const Index = () => {
                 )}
               </CardTitle>
               <CardDescription className="text-gray-400">
-                {isLogin 
+                {booleanToggles.isLogin 
                   ? "Sign in to your account to continue your learning journey"
                   : "Create your account and start connecting with mentors or mentees"
                 }
@@ -67,22 +84,34 @@ const Index = () => {
             
             <CardContent className="space-y-6">
               <form onSubmit={handleSubmit} className="space-y-4">
-                {!isLogin && (
-                  <div className="space-y-2">
-                    <Label htmlFor="fullName" className="text-white">Full Name</Label>
+                {!booleanToggles.isLogin && (
+                  <><div className="space-y-2">
+                  <Label htmlFor="firstName" className="text-white">Full Name</Label>
+                  <div className="relative">
+                    <User className="icon-inside-input" />
+                    <Input
+                      id="firstname"
+                      type="text"
+                      placeholder="Enter your first name"
+                      value={registerSlice.firstName}
+                      onChange={(e: any) => handleInputChange('firstName', e.target.value, "registerSlice")}
+                      className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
+                      required={!booleanToggles.isLogin} />
+                  </div>
+                </div><div className="space-y-2">
+                    <Label htmlFor="lastName" className="text-white">Last Name</Label>
                     <div className="relative">
                       <User className="icon-inside-input" />
                       <Input
-                        id="fullName"
+                        id="lastName"
                         type="text"
-                        placeholder="Enter your full name"
-                        value={formData.fullName}
-                        onChange={(e: any) => handleInputChange('fullName', e.target.value)}
+                        placeholder="Enter your last name"
+                        value={registerSlice.lastName}
+                        onChange={(e: any) => handleInputChange('lastName', e.target.value, "registerSlice")}
                         className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
-                        required={!isLogin}
-                      />
+                        required={!booleanToggles.isLogin} />
                     </div>
-                  </div>
+                  </div></>
                 )}
 
                 <div className="space-y-2">
@@ -93,8 +122,8 @@ const Index = () => {
                       id="email"
                       type="email"
                       placeholder="Enter your email"
-                      value={formData.email}
-                      onChange={(e: any) => handleInputChange('email', e.target.value)}
+                      value={registerSlice.email}
+                      onChange={(e: any) => handleInputChange('email', e.target.value, "registerSlice")}
                       className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
                       required
                     />
@@ -109,15 +138,15 @@ const Index = () => {
                       id="password"
                       type="password"
                       placeholder="Enter your password"
-                      value={formData.password}
-                      onChange={(e:any) => handleInputChange('password', e.target.value)}
+                      value={registerSlice.password}
+                      onChange={(e:any) => handleInputChange('password', e.target.value, "registerSlice")}
                       className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
                       required
                     />
                   </div>
                 </div>
 
-                {!isLogin && (
+                {!booleanToggles.isLogin && (
                   <>
                     <div className="space-y-2">
                       <Label htmlFor="confirmPassword" className="text-white">Confirm Password</Label>
@@ -127,17 +156,17 @@ const Index = () => {
                           id="confirmPassword"
                           type="password"
                           placeholder="Confirm your password"
-                          value={formData.confirmPassword}
-                          onChange={(e: any) => handleInputChange('confirmPassword', e.target.value)}
+                          value={registerSlice.confirmPassword}
+                          onChange={(e: any) => handleInputChange('confirmPassword', e.target.value, "registerSlice")}
                           className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
-                          required={!isLogin}
+                          required={!booleanToggles.isLogin}
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="role" className="text-white">I want to be a</Label>
-                      <Select value={formData.role} onValueChange={(value: any) => handleInputChange('role', value)}>
+                      <Select key={registerSlice.role.value} value={registerSlice.role.value} onValueChange={(value: any) => handleInputChange('role', value, "registerSlice")}>
                         <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
                           <SelectValue placeholder="Select your role" />
                         </SelectTrigger>
@@ -164,11 +193,11 @@ const Index = () => {
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium h-10 py-0 transition-colors"
                 >
-                  {isLogin ? 'Sign In' : 'Create Account'}
+                  {booleanToggles.isLogin ? 'Sign In' : 'Create Account'}
                 </Button>
               </form>
 
-              {isLogin && (
+              {booleanToggles.isLogin && (
                 <div className="text-center">
                   <a href="#" className="text-sm text-blue-400 hover:text-blue-300 underline">
                     Forgot your password?
@@ -182,14 +211,14 @@ const Index = () => {
           {/* Toggle between login and register */}
           <div className="text-center mt-6">
             <p className="text-gray-400">
-              {isLogin ? "Don't have an account?" : "Already have an account?"}
+              {booleanToggles.isLogin ? "Don't have an account?" : "Already have an account?"}
             </p>
             <Button 
               variant="link" 
               className="text-blue-400 hover:text-blue-300 font-medium"
-              onClick={() => setIsLogin(!isLogin)}
+              onClick={() => handleInputChange('isLogin', booleanToggles.isLogin ? false : true, 'booleanToggles')}
             >
-              {isLogin ? "Sign up for free" : "Sign in instead"}
+              {booleanToggles.isLogin ? "Sign up for free" : "Sign in instead"}
             </Button>
           </div>
 
