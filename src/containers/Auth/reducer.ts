@@ -2,11 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { authTypes } from "./types";
 
 const initialState: authTypes = {
-    loginSlice: {
-        userName: "test",
-        password: "test",
-    },
-
     registerSlice: {
         firstName: "",
         lastName: "",
@@ -37,10 +32,17 @@ const auth = createSlice({
                     [name]: value
                 }
             }
+        },
+
+        clearSlice(state: authTypes) {
+            return {
+                ...state,
+                ...initialState
+            }
         }
     }
 });
 
 export default auth.reducer;
 
-export const { setDetail } = auth.actions;
+export const { setDetail, clearSlice } = auth.actions;

@@ -8,15 +8,14 @@ import { IRootType } from '@/store/storeType';
 import { GraduationCap, Lock, LogIn, Mail, User, UserPlus, Users } from 'lucide-react'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { setDetail } from './reducer';
+import { clearSlice, setDetail } from './reducer';
 import { toast } from 'react-toastify';
+import PostApis from '@/services/api/postApi';
 
 const Index: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { booleanToggles, loginSlice, registerSlice } = useSelector((state: IRootType) => state.auth);
-
-
+  const { booleanToggles, registerSlice } = useSelector((state: IRootType) => state.auth);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,13 +25,8 @@ const Index: React.FC = () => {
       password: registerSlice.password
     }
     try {
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/v1/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const data = await response.json();
-      toast.error(data.msg)
+      const response = await PostApis.login(payload);
+      toast.error(response)
     } catch (error) {
       console.error('API Error:', error);
     }
@@ -216,7 +210,11 @@ const Index: React.FC = () => {
             <Button 
               variant="link" 
               className="text-blue-400 hover:text-blue-300 font-medium"
-              onClick={() => handleInputChange('isLogin', booleanToggles.isLogin ? false : true, 'booleanToggles')}
+              onClick={() => {
+                dispatch(clearSlice());
+                handleInputChange('isLogin', booleanToggles.isLogin ? false : true, 'booleanToggles')
+              }
+            }
             >
               {booleanToggles.isLogin ? "Sign up for free" : "Sign in instead"}
             </Button>
