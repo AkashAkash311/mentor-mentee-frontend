@@ -6,7 +6,7 @@ const THEME_KEY = "mentormentee.theme";
 
 export const useTheme = (): [Theme, () => void] => {
   const getInitial = (): Theme => {
-    if (typeof window === "undefined") return "light";
+    if (typeof window === "undefined") return "dark";
     return (localStorage.getItem(THEME_KEY) as Theme) ?? "light";
   };
 
