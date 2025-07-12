@@ -14,4 +14,15 @@ export interface authTypes {
     booleanToggles: {
         isLogin: boolean;
     }
+
+    loginDetails: {
+        token: string;
+        user: {
+            email: string;
+            role: string;
+            firstName: string;
+            lastName: string;
+            field: string;
+        }
+    }
 }

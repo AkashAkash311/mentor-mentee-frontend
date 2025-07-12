@@ -12,7 +12,7 @@ const App: React.FC = () => (
       autoClose={1500}
       hideProgressBar={false}
       closeOnClick
-      theme='light'
+      theme='dark'
     />
     <ThemeRoutes />
   </ThemeProvider>
