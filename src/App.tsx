@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from "./components/theme-provider"
 import { ToastContainer } from "react-toastify";
-import './App.css';
+// import './App.css';
 import "./styles/globals.css";
 import ThemeRoutes from "@/routes";
 
