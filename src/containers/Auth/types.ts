@@ -1,9 +1,4 @@
 export interface authTypes {
-    
-    loginSlice: {
-        userName: string;
-        password: string;
-    };
 
     registerSlice: {
         firstName: string;
