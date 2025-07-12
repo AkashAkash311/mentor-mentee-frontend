@@ -1,33 +1,53 @@
+// external Imports
+import React, { useState } from 'react'
+import { GraduationCap, Lock, LogIn, Mail, User, UserPlus, Users } from 'lucide-react'
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+
+// project Imports
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { IRootType } from '@/store/storeType';
-import { GraduationCap, Lock, LogIn, Mail, User, UserPlus, Users } from 'lucide-react'
-import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { clearSlice, setDetail } from './reducer';
-import { toast } from 'react-toastify';
+import { clearSlice, setDetail, setLoginDetails } from './reducer';
 import PostApis from '@/services/api/postApi';
+
+import { IRootType } from '@/store/storeType';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/routes/types';
 
 const Index: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { booleanToggles, registerSlice } = useSelector((state: IRootType) => state.auth);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const payload = {
-      email: registerSlice.email,
-      password: registerSlice.password
-    }
     try {
-      const response = await PostApis.login(payload);
-      toast.error(response)
-    } catch (error) {
+      let response;
+      if (booleanToggles.isLogin){
+        const payload = {
+          email: registerSlice.email,
+          password: registerSlice.password
+        }
+        response = await PostApis.login(payload);
+        dispatch(setLoginDetails(response.data.responseObject))
+        toast.success(response.data.message)
+        navigate(ROUTES.HOME)
+      } else {
+        response = await PostApis.register(registerSlice);
+        // dispatch(setLoginDetails(response.data.responseObject))
+        toast.success(response.data.message)
+        dispatch(clearSlice());
+        handleInputChange('isLogin', booleanToggles.isLogin ? false : true, 'booleanToggles')
+        // navigate(ROUTES.HOME)
+      }
+      // toast.error(response)
+    } catch (error: any) {
+      toast.error(error.response.data.message);
       console.error('API Error:', error);
     }
   };
@@ -79,33 +99,50 @@ const Index: React.FC = () => {
             <CardContent className="space-y-6">
               <form onSubmit={handleSubmit} className="space-y-4">
                 {!booleanToggles.isLogin && (
-                  <><div className="space-y-2">
-                  <Label htmlFor="firstName" className="text-white">Full Name</Label>
-                  <div className="relative">
-                    <User className="icon-inside-input" />
-                    <Input
-                      id="firstname"
-                      type="text"
-                      placeholder="Enter your first name"
-                      value={registerSlice.firstName}
-                      onChange={(e: any) => handleInputChange('firstName', e.target.value, "registerSlice")}
-                      className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
-                      required={!booleanToggles.isLogin} />
-                  </div>
-                </div><div className="space-y-2">
-                    <Label htmlFor="lastName" className="text-white">Last Name</Label>
-                    <div className="relative">
-                      <User className="icon-inside-input" />
-                      <Input
-                        id="lastName"
-                        type="text"
-                        placeholder="Enter your last name"
-                        value={registerSlice.lastName}
-                        onChange={(e: any) => handleInputChange('lastName', e.target.value, "registerSlice")}
-                        className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
-                        required={!booleanToggles.isLogin} />
+                  <>
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName" className="text-white">User Name</Label>
+                      <div className="relative">
+                        <User className="icon-inside-input" />
+                        <Input
+                          id="username"
+                          type="text"
+                          placeholder="Enter your User name"
+                          value={registerSlice.userName}
+                          onChange={(e: any) => handleInputChange('userName', e.target.value, "registerSlice")}
+                          className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
+                          required={!booleanToggles.isLogin} />
+                      </div>
                     </div>
-                  </div></>
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName" className="text-white">first Name</Label>
+                      <div className="relative">
+                        <User className="icon-inside-input" />
+                        <Input
+                          id="firstname"
+                          type="text"
+                          placeholder="Enter your first name"
+                          value={registerSlice.firstName}
+                          onChange={(e: any) => handleInputChange('firstName', e.target.value, "registerSlice")}
+                          className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
+                          required={!booleanToggles.isLogin} />
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName" className="text-white">Last Name</Label>
+                      <div className="relative">
+                        <User className="icon-inside-input" />
+                        <Input
+                          id="lastName"
+                          type="text"
+                          placeholder="Enter your last name"
+                          value={registerSlice.lastName}
+                          onChange={(e: any) => handleInputChange('lastName', e.target.value, "registerSlice")}
+                          className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
+                          required={!booleanToggles.isLogin} />
+                      </div>
+                    </div>
+                  </>
                 )}
 
                 <div className="space-y-2">
@@ -222,7 +259,7 @@ const Index: React.FC = () => {
 
           {/* Footer */}
           <div className="text-center mt-8 text-sm text-gray-500">
-            <p>© 2025 MentorConnect. All rights reserved.</p>
+            <p>© 2025 MentorMentee. All rights reserved.</p>
           </div>
         </div>
     </div>

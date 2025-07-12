@@ -36,7 +36,7 @@ export default class PostApis {
     static registerCancel?: () => void;
 
     static forgotPassword(data: any): CancelablePromise {
-        const forgotPasswordRequest = post("/v1/api/auth/forgot-password", { data });
+        const forgotPasswordRequest = post("/v1/api/auth/updatePassword", { data });
         PostApis.forgotPasswordCancel = forgotPasswordRequest.cancel;
         return forgotPasswordRequest;
     }

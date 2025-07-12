@@ -9,12 +9,23 @@ const initialState: authTypes = {
         email: "",
         password: "",
         confirmPassword: "",
-        field: "",
+        field: "tester",
         role: {id: "", value: ""}
     },
 
     booleanToggles: {
         isLogin: false
+    },
+
+    loginDetails: {
+        token: "",
+        user: {
+            email: "",
+            role: "",
+            firstName: "",
+            lastName: "",
+            field: ""
+        }
     }
 };
 
@@ -34,6 +45,17 @@ const auth = createSlice({
             }
         },
 
+        setLoginDetails(state: any, action){
+            const {token, user} = action.payload;
+            return {
+                ...state,
+                loginDetails: {
+                    token: token,
+                    user: user ? user : initialState
+                }
+            }
+        },
+
         clearSlice(state: authTypes) {
             return {
                 ...state,
@@ -45,4 +67,4 @@ const auth = createSlice({
 
 export default auth.reducer;
 
-export const { setDetail, clearSlice } = auth.actions;
+export const { setDetail, clearSlice, setLoginDetails } = auth.actions;
