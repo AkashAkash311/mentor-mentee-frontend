@@ -2,7 +2,7 @@ import Loadable from "@/components/Loadable";
 import React, { lazy } from "react";
 import { ROUTES } from "./types";
 
-const Home = Loadable(lazy(() => import("@/containers/Auth/home"))) 
+const Home = Loadable(lazy(() => import("@/containers/dashboard/DashBoardHeader"))) 
 
 const MainRoutes = {
     path: "/",
