@@ -1,9 +1,9 @@
-// src/components/DashboardHeader.tsx
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, MessagesSquare } from "lucide-react";
+import { GraduationCap, LayoutDashboard, MessagesSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProfileToggle } from "@/containers/dashboard/ProfileToggle";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Input } from "@/components/ui/input"
 
 const nav = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
@@ -16,17 +16,24 @@ const nav = [
     <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
         {/* --------- Logo --------- */}
-        <Link to="/home" className="flex items-center gap-2 text-primary">
-          <span className="rounded-lg bg-primary/20 p-2">
-            <LayoutDashboard className="h-5 w-5" />
-          </span>
-          <span className="text-lg font-semibold tracking-tight">
-            Mentor&nbsp;Mentee
-          </span>
+        <Link to="/home">
+          <div className="flex items-center justify-center mt-2 mb-2">
+            {/* icon bubble */}
+            <div className="rounded-full p-2 mr-3 bg-black dark:bg-white">
+              <GraduationCap className="h-6 w-6 text-white dark:text-black" />
+            </div>
+
+            {/* brand text */}
+            <h6 className="text-2xl font-bold dark:text-white">
+              Mentor
+              <span className="text-blue-600 dark:text-blue-400">Mentee</span>
+            </h6>
+          </div>
+
         </Link>
 
         {/* --------- Main nav --------- */}
-        <nav className="ml-6 hidden sm:flex items-center gap-2">
+        {/* <nav className="ml-6 hidden sm:flex items-center gap-2">
           {nav.map(({ label, icon: Icon, href }) => {
             const active = pathname.startsWith(href);
             return (
@@ -52,7 +59,10 @@ const nav = [
               </Link>
             );
           })}
-        </nav>
+        </nav> */}
+        <div className="min-w-[400px] max-w-md w-full">
+          <Input placeholder="Search" name="dashboardSearchBar" className="w-full" />
+        </div>
 
         {/* --------- Right‑side actions --------- */}
         <div className="flex items-center gap-2">
