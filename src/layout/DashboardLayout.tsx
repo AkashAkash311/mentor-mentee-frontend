@@ -38,16 +38,17 @@ export default function DashboardLayout({
       {/* -------- Header -------- */}
       <header className="sticky top-0 z-50 flex h-14 w-full items-center justify-between border-b border-border bg-background px-6">
         <div className="flex items-center gap-3">
-          {/* Sidebar toggle button */}
 
           {/* Logo */}
           <div className="rounded-full p-2 bg-black dark:bg-white cursor-pointer">
             <GraduationCap className="h-5 w-5 text-white dark:text-black" />
           </div>
-          <h6 className="text-lg font-bold dark:text-white cursor-pointer">
-            Mentor
-            <span className="text-blue-600 dark:text-blue-400">Mentee</span>
-          </h6>
+          {!collapsed && (
+            <h6 className="text-lg font-bold dark:text-white cursor-pointer">
+              Mentor
+              <span className="text-blue-600 dark:text-blue-400">Mentee</span>
+            </h6>
+          )}
           <button
             onClick={() => setCollapsed(!collapsed)}
             className="p-2 rounded hover:bg-muted"
