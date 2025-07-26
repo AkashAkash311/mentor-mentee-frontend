@@ -1,5 +1,5 @@
 // External imports
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Settings,
@@ -28,7 +28,13 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
 
-  const {collapsed, toggleSidebar} = useDashboardLayout();
+  const {collapsed, toggleSidebar, handleNavClick, navItems} = useDashboardLayout();
+
+  useEffect(() => {
+    console.log("defgrthedwqdefrwd", navItems);
+
+  }, [navItems]);
+
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-background text-foreground">
@@ -77,15 +83,15 @@ export default function DashboardLayout({
 
           <SidebarContent className="flex-1">
             <SidebarGroup>
-              {nav.map(({ label, pageUniqueIdentification, icon: Icon, isActive }) => {
-                // const active = pathname.startsWith(pageUniqueIdentification);
+              {navItems.map(({ id, label, pageUniqueIdentification, icon: Icon, isActive }) => {
                 return (
                   <div
-                    key={pageUniqueIdentification}
+                    key={id}
                     className={cn(
                       "flex items-center gap-3 rounded px-4 py-2 text-sm transition hover:bg-accent hover:text-accent-foreground cursor-pointer",
                       isActive && "bg-purple-600 text-white",
                     )}
+                    onClick={() => handleNavClick(id)}
                   >
                     <Icon className="h-4 w-4" />
                     {!collapsed && label}

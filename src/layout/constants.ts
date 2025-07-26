@@ -6,7 +6,7 @@ export const nav = [
     label: "Dashboard",
     icon: LayoutDashboard,
     pageUniqueIdentification: "dashboard",
-    isActive: true,
+    isActive: false,
   },
   {
     id: 2,
@@ -27,6 +27,6 @@ export const nav = [
     label: "Messages",
     icon: MessagesSquare,
     pageUniqueIdentification: "messages",
-    isActive: true,
+    isActive: false,
   },
 ];
