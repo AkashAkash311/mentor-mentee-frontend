@@ -8,7 +8,7 @@ import { SidebarProvider } from './components/ui/sidebar';
 
 const App: React.FC = () => (
   <ThemeProvider>
-      <SidebarProvider>
+      {/* <SidebarProvider> */}
       <ToastContainer 
         position="top-right"
         autoClose={1500}
@@ -17,7 +17,7 @@ const App: React.FC = () => (
         theme='dark'
       />
       <ThemeRoutes />
-    </SidebarProvider>
+    {/* </SidebarProvider> */}
   </ThemeProvider>
 );
 
