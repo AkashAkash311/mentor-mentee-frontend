@@ -1,37 +1,34 @@
+// External imports
+import { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
+import {
+  Settings,
+  GraduationCap
+} from "lucide-react";
+
+// Internal imports
 import {
   Sidebar,
   SidebarHeader,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarTrigger,
+  SidebarRail,
 } from "@/components/ui/sidebar";
-import { useLocation, Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import {
-  LayoutDashboard,
-  MessagesSquare,
-  LogOut,
-  Settings,
-  GraduationCap,
-} from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-
-const nav = [
-  { label: "Dashboard", icon: LayoutDashboard, href: "#" },
-  { label: "Requests", icon: MessagesSquare, href: "/requests" },
-  { label: "Posts", icon: MessagesSquare, href: "/posts" },
-  { label: "Messages", icon: MessagesSquare, href: "/messages" },
-];
+import { nav } from "./constants";
+import { useDashboardLayout } from "./useDashboardLayout";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { pathname } = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
+
+  const {collapsed, toggleSidebar} = useDashboardLayout();
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-background text-foreground">
@@ -49,26 +46,7 @@ export default function DashboardLayout({
               <span className="text-blue-600 dark:text-blue-400">Mentee</span>
             </h6>
           )}
-          <button
-            onClick={() => setCollapsed(!collapsed)}
-            className="p-2 rounded hover:bg-muted"
-          >
-            <span className="sr-only">Toggle Sidebar</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-muted-foreground"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
+            <SidebarTrigger onClick={toggleSidebar} className="w-5 h-5 text-zinc-300 hover:text-white cursor-pointer" />
         </div>
 
         {/* Search bar */}
@@ -99,20 +77,19 @@ export default function DashboardLayout({
 
           <SidebarContent className="flex-1">
             <SidebarGroup>
-              {nav.map(({ label, href, icon: Icon }) => {
-                const active = pathname.startsWith(href);
+              {nav.map(({ label, pageUniqueIdentification, icon: Icon, isActive }) => {
+                // const active = pathname.startsWith(pageUniqueIdentification);
                 return (
-                  <Link
-                    key={href}
-                    to={href}
+                  <div
+                    key={pageUniqueIdentification}
                     className={cn(
-                      "flex items-center gap-3 rounded px-4 py-2 text-sm transition hover:bg-accent hover:text-accent-foreground",
-                      active && "bg-destructive text-destructive-foreground"
+                      "flex items-center gap-3 rounded px-4 py-2 text-sm transition hover:bg-accent hover:text-accent-foreground cursor-pointer",
+                      isActive && "bg-purple-600 text-white",
                     )}
                   >
                     <Icon className="h-4 w-4" />
                     {!collapsed && label}
-                  </Link>
+                  </div>
                 );
               })}
             </SidebarGroup>
@@ -120,10 +97,6 @@ export default function DashboardLayout({
 
           <SidebarFooter className="p-4 border-t">
             <div className="flex flex-col gap-2">
-              <button className="flex items-center gap-2 text-sm">
-                <LogOut className="h-4 w-4" />
-                {!collapsed && "Logout"}
-              </button>
               <Link to="/settings" className="flex items-center gap-2 text-sm">
                 <Settings className="h-4 w-4" />
                 {!collapsed && "Settings"}
@@ -132,10 +105,6 @@ export default function DashboardLayout({
           </SidebarFooter>
         </Sidebar>
 
-        {/* Divider */}
-        {/* <div className="w-[1px] bg-border" /> */}
-
-        {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>

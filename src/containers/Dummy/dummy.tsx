@@ -2,7 +2,14 @@ import React from 'react'
 
 const dummy = () => {
   return (
-    <div>dummy</div>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh'
+    }}>
+      dummy
+    </div>
   )
 }
 
