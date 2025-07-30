@@ -1,3 +1,4 @@
+import { ROUTES } from "@/routes/types";
 import { LayoutDashboard, MessagesSquare, Users, Compass } from "lucide-react";
 
 export const nav = [
@@ -7,6 +8,7 @@ export const nav = [
     icon: LayoutDashboard,
     pageUniqueIdentification: "dashboard",
     isActive: false,
+    url: ROUTES.DASHBOARD,
   },
   {
     id: 2,
@@ -14,6 +16,7 @@ export const nav = [
     icon: Users,
     pageUniqueIdentification: "requests",
     isActive: false,
+    url: ROUTES.REQUESTS,
   },
   {
     id: 3,
@@ -21,6 +24,7 @@ export const nav = [
     icon: Compass,
     pageUniqueIdentification: "posts",
     isActive: false,
+    url: ROUTES.POSTS,
   },
   {
     id: 4,
@@ -28,5 +32,6 @@ export const nav = [
     icon: MessagesSquare,
     pageUniqueIdentification: "messages",
     isActive: false,
+    url: ROUTES.MESSAGES,
   },
 ];

@@ -20,7 +20,6 @@ import {
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Input } from "@/components/ui/input";
-import { nav } from "./constants";
 import { useDashboardLayout } from "./useDashboardLayout";
 
 export default function DashboardLayout({
@@ -30,12 +29,6 @@ export default function DashboardLayout({
 }) {
 
   const {collapsed, toggleSidebar, handleNavClick, navItems} = useDashboardLayout();
-
-  useEffect(() => {
-    console.log("defgrthedwqdefrwd", navItems);
-
-  }, [navItems]);
-
 
   return (
     <SidebarProvider >
@@ -85,7 +78,7 @@ export default function DashboardLayout({
 
             <SidebarContent className="flex-1">
               <SidebarGroup>
-                {navItems.map(({ id, label, pageUniqueIdentification, icon: Icon, isActive }) => {
+                {navItems.map(({ id, label, pageUniqueIdentification, icon: Icon, isActive, url }) => {
                   return (
                     <div
                       key={id}
@@ -93,7 +86,7 @@ export default function DashboardLayout({
                         "flex items-center gap-3 rounded px-4 py-2 text-sm transition hover:bg-accent hover:text-accent-foreground cursor-pointer",
                         isActive && "bg-purple-600 text-white",
                       )}
-                      onClick={() => handleNavClick(id)}
+                      onClick={() => handleNavClick(id, url)}
                     >
                       <Icon className="h-4 w-4" />
                       {!collapsed && label}
@@ -113,7 +106,7 @@ export default function DashboardLayout({
             </SidebarFooter>
           </Sidebar>
 
-          <main className="flex-1 overflow-y-auto p-6">{children}</main>
+          <main className="ml-64">{children}</main>
         </div>
       </div>
     </SidebarProvider>

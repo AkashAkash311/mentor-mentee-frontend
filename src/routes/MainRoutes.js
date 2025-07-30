@@ -6,7 +6,8 @@ import DashboardLayout from "@/layout/DashboardLayout";
 
 const Home = Loadable(lazy(() => import("@/layout/DashboardLayout"))); 
 
-const Dummy = Loadable(lazy(() => import("@/containers/Dummy/dummy")));
+const Posts = Loadable(lazy(() => import("@/containers/posts/index")));
+
 
 const MainRoutes = {
     path: "/",
@@ -20,14 +21,14 @@ const MainRoutes = {
             )
         },
         {
-            path: ROUTES.DUMMY,
+            path: ROUTES.POSTS,
             element: (
                 <ProtectedRoute>
-                    <DashboardLayout>
-                        <Dummy />
-                    </DashboardLayout>
+                    <Home>
+                        <Posts />
+                    </Home>
                 </ProtectedRoute>
-            )
+            ),
         }
     ]
 }
