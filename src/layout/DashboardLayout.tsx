@@ -1,6 +1,5 @@
 // External imports
-import { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Settings,
   GraduationCap
@@ -9,12 +8,10 @@ import {
 // Internal imports
 import {
   Sidebar,
-  SidebarHeader,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarTrigger,
-  SidebarRail,
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";

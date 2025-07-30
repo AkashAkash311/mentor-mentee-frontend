@@ -67,7 +67,6 @@ function SidebarProvider({
   onOpenChange?: (open: boolean) => void
 }) {
 //   const isMobile = useIsMobile()
-  console.log("ewfrgthgefwgrthgefw", window.innerWidth);
     const isMobile = React.useMemo(() => {
         return window.innerWidth < 768
     }, [])
