@@ -28,7 +28,7 @@ const Index: React.FC = () => {
 
     try {
       let response;
-      if (booleanToggles.isLogin){
+      if (booleanToggles?.isLogin){
         const payload = {
           email: registerSlice.email,
           password: registerSlice.password
@@ -42,7 +42,7 @@ const Index: React.FC = () => {
         // dispatch(setLoginDetails(response.data.responseObject))
         toast.success(response.data.message)
         dispatch(clearSlice());
-        handleInputChange('isLogin', booleanToggles.isLogin ? false : true, 'booleanToggles')
+        handleInputChange('isLogin', booleanToggles?.isLogin ? false : true, 'booleanToggles')
         // navigate(ROUTES.HOME)
       }
       // toast.error(response)
@@ -76,7 +76,7 @@ const Index: React.FC = () => {
           <Card className="border-gray-800 bg-gray-900/50 backdrop-blur-sm">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl text-white flex items-center justify-center">
-                {booleanToggles.isLogin ? (
+                {booleanToggles?.isLogin ? (
                   <>
                     <LogIn className="h-6 w-6 mr-2" />
                     Welcome Back
@@ -89,7 +89,7 @@ const Index: React.FC = () => {
                 )}
               </CardTitle>
               <CardDescription className="text-gray-400">
-                {booleanToggles.isLogin 
+                {booleanToggles?.isLogin 
                   ? "Sign in to your account to continue your learning journey"
                   : "Create your account and start connecting with mentors or mentees"
                 }
@@ -98,7 +98,7 @@ const Index: React.FC = () => {
             
             <CardContent className="space-y-6">
               <form onSubmit={handleSubmit} className="space-y-4">
-                {!booleanToggles.isLogin && (
+                {!booleanToggles?.isLogin && (
                   <>
                     <div className="space-y-2">
                       <Label htmlFor="firstName" className="text-white">User Name</Label>
@@ -108,10 +108,10 @@ const Index: React.FC = () => {
                           id="username"
                           type="text"
                           placeholder="Enter your User name"
-                          value={registerSlice.userName}
+                          value={registerSlice?.userName}
                           onChange={(e: any) => handleInputChange('userName', e.target.value, "registerSlice")}
                           className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
-                          required={!booleanToggles.isLogin} />
+                          required={!booleanToggles?.isLogin} />
                       </div>
                     </div>
                     <div className="space-y-2">
@@ -122,10 +122,10 @@ const Index: React.FC = () => {
                           id="firstname"
                           type="text"
                           placeholder="Enter your first name"
-                          value={registerSlice.firstName}
+                          value={registerSlice?.firstName}
                           onChange={(e: any) => handleInputChange('firstName', e.target.value, "registerSlice")}
                           className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
-                          required={!booleanToggles.isLogin} />
+                          required={!booleanToggles?.isLogin} />
                       </div>
                     </div>
                     <div className="space-y-2">
@@ -136,10 +136,10 @@ const Index: React.FC = () => {
                           id="lastName"
                           type="text"
                           placeholder="Enter your last name"
-                          value={registerSlice.lastName}
+                          value={registerSlice?.lastName}
                           onChange={(e: any) => handleInputChange('lastName', e.target.value, "registerSlice")}
                           className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
-                          required={!booleanToggles.isLogin} />
+                          required={!booleanToggles?.isLogin} />
                       </div>
                     </div>
                   </>
@@ -153,7 +153,7 @@ const Index: React.FC = () => {
                       id="email"
                       type="email"
                       placeholder="Enter your email"
-                      value={registerSlice.email}
+                      value={registerSlice?.email}
                       onChange={(e: any) => handleInputChange('email', e.target.value, "registerSlice")}
                       className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
                       required
@@ -169,7 +169,7 @@ const Index: React.FC = () => {
                       id="password"
                       type="password"
                       placeholder="Enter your password"
-                      value={registerSlice.password}
+                      value={registerSlice?.password}
                       onChange={(e:any) => handleInputChange('password', e.target.value, "registerSlice")}
                       className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
                       required
@@ -177,7 +177,7 @@ const Index: React.FC = () => {
                   </div>
                 </div>
 
-                {!booleanToggles.isLogin && (
+                {!booleanToggles?.isLogin && (
                   <>
                     <div className="space-y-2">
                       <Label htmlFor="confirmPassword" className="text-white">Confirm Password</Label>
@@ -187,17 +187,17 @@ const Index: React.FC = () => {
                           id="confirmPassword"
                           type="password"
                           placeholder="Confirm your password"
-                          value={registerSlice.confirmPassword}
+                          value={registerSlice?.confirmPassword}
                           onChange={(e: any) => handleInputChange('confirmPassword', e.target.value, "registerSlice")}
                           className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-blue-500"
-                          required={!booleanToggles.isLogin}
+                          required={!booleanToggles?.isLogin}
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="role" className="text-white">I want to be a</Label>
-                      <Select key={registerSlice.role.value} value={registerSlice.role.value} onValueChange={(value: any) => handleInputChange('role', value, "registerSlice")}>
+                      <Select key={registerSlice?.role.value} value={registerSlice?.role.value} onValueChange={(value: any) => handleInputChange('role', value, "registerSlice")}>
                         <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
                           <SelectValue placeholder="Select your role" />
                         </SelectTrigger>
@@ -224,11 +224,11 @@ const Index: React.FC = () => {
                   type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium h-10 py-0 transition-colors"
                 >
-                  {booleanToggles.isLogin ? 'Sign In' : 'Create Account'}
+                  {booleanToggles?.isLogin ? 'Sign In' : 'Create Account'}
                 </Button>
               </form>
 
-              {booleanToggles.isLogin && (
+              {booleanToggles?.isLogin && (
                 <div className="text-center">
                   <a href="#" className="text-sm text-blue-400 hover:text-blue-300 underline">
                     Forgot your password?
@@ -242,18 +242,18 @@ const Index: React.FC = () => {
           {/* Toggle between login and register */}
           <div className="text-center mt-6">
             <p className="text-gray-400">
-              {booleanToggles.isLogin ? "Don't have an account?" : "Already have an account?"}
+              {booleanToggles?.isLogin ? "Don't have an account?" : "Already have an account?"}
             </p>
             <Button 
               variant="link" 
               className="text-blue-400 hover:text-blue-300 font-medium"
               onClick={() => {
                 dispatch(clearSlice());
-                handleInputChange('isLogin', booleanToggles.isLogin ? false : true, 'booleanToggles')
+                handleInputChange('isLogin', booleanToggles?.isLogin ? false : true, 'booleanToggles')
               }
             }
             >
-              {booleanToggles.isLogin ? "Sign up for free" : "Sign in instead"}
+              {booleanToggles?.isLogin ? "Sign up for free" : "Sign in instead"}
             </Button>
           </div>
 
