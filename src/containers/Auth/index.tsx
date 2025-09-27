@@ -1,5 +1,5 @@
 // external Imports
-import React, { useState } from 'react'
+import React from 'react'
 import { GraduationCap, Lock, LogIn, Mail, User, UserPlus, Users } from 'lucide-react'
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';

@@ -1,16 +1,11 @@
-import { Link, useLocation } from "react-router-dom";
-import { GraduationCap, LayoutDashboard, MessagesSquare } from "lucide-react";
-import { cn } from "@/lib/utils";
+import React from "react";
+import { Link } from "react-router-dom";
+import { GraduationCap } from "lucide-react";
 import { ProfileToggle } from "@/containers/dashboard/ProfileToggle";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Input } from "@/components/ui/input"
 
-const nav = [
-  { label: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
-  { label: "Requests",  icon: MessagesSquare,  href: "/requests"  },
-];
  const DashboardHeader = () => {
-  const { pathname } = useLocation();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur">
