@@ -1,28 +1,30 @@
-import { FloatingButton } from '@/components/FloatingButton';
-import React, { useState } from 'react'
-import { CreatePostModal } from './createPosts/CreatePostUI';
-import { Dialog, DialogContent } from '@radix-ui/react-dialog';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import CreatePostModal from './createPosts/CreatePostUI';
+import { Plus } from 'lucide-react';
 
-const Index = () => {
-  const [open, setOpen] = useState<boolean>(true)
-  const handleCreatePost = () => {
-    // Logic to handle post creatio
-    setOpen(true);
-    console.log("Create Post button clicked");
-  }
+export default function CreatePostButton() {
+  const [open, setOpen] = useState(false);
 
-  const openChange = () => {
-    setOpen(false);
-  }
+  const handlePost = (content: string) => {
+    console.log('New post:', content);
+    // TODO: integrate with API here
+  };
 
-   return (
-      <div className="min-h-screen relative">
-        <CreatePostModal open={open} onOpenChange={openChange}/>
+  return (
+    // <div className="w-screen h-screen relative">
+      <>
+        <Button
+          onClick={() => setOpen(true)}
+          className="fixed bottom-8 right-8 rounded-full p-4 shadow-lg bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          <Plus className="h-6 w-6" />
+        </Button>
 
-        <FloatingButton onClick={handleCreatePost} />
-      </div>
+        {/* Modal */}
+        <CreatePostModal open={open} onOpenChange={setOpen} onPost={handlePost} />
+      </>
+    // </div>
   );
 
 }
-
-export default Index

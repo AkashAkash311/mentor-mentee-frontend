@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogOverlay, DialogPortal, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ImageIcon, Smile, Hash, Link } from 'lucide-react';
+import { Smile, Hash, Link } from 'lucide-react';
 
 interface CreatePostModalProps {
   open: boolean;
@@ -11,8 +11,9 @@ interface CreatePostModalProps {
   onPost?: (content: string) => void;
 }
 
-export function CreatePostModal({ open, onOpenChange, onPost }: CreatePostModalProps) {
+export default function CreatePostModal({ open, onOpenChange, onPost }: CreatePostModalProps) {
   const [content, setContent] = useState('');
+  console.log(open, "etdgfgrthrgfegrthr");
 
   const handlePost = () => {
     if (content.trim()) {
@@ -24,65 +25,18 @@ export function CreatePostModal({ open, onOpenChange, onPost }: CreatePostModalP
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
-        <DialogHeader>
-          <DialogTitle className="text-xl font-semibold text-slate-900 dark:text-white">
-            Create a post
-          </DialogTitle>
-        </DialogHeader>
-        
-        <div className="space-y-4">
-          <div className="flex gap-3">
-            <Avatar className="h-10 w-10">
-              <AvatarImage src="text" />
-              <AvatarFallback className="bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white">U</AvatarFallback>
-            </Avatar>
-            
-            <div className="flex-1">
-              <Textarea
-                placeholder="What's on your mind?"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className="min-h-[120px] bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white placeholder:text-slate-400 resize-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-          </div>
-          
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 p-2"
-              >
-                <Smile className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 p-2"
-              >
-                <Hash className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-slate-400 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 p-2"
-              >
-                <Link className="h-5 w-5" />
-              </Button>
-            </div>
-            
-            <Button
-              onClick={handlePost}
-              disabled={!content.trim()}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Post
-            </Button>
-          </div>
-        </div>
-      </DialogContent>
+      <DialogPortal>
+        <DialogOverlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" />
+        <DialogContent className="fixed top-1/2 left-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white dark:bg-slate-900 shadow-xl border border-slate-200 dark:border-slate-700">
+          <DialogHeader className="border-b border-slate-200 dark:border-slate-700 pb-3">
+            <DialogTitle className="text-lg font-semibold text-slate-900 dark:text-white">
+              Create a post
+            </DialogTitle>
+          </DialogHeader>
+
+          {/* Your textarea + buttons */}
+        </DialogContent>
+      </DialogPortal>
     </Dialog>
   );
 }
