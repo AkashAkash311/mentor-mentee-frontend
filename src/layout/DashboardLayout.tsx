@@ -105,8 +105,7 @@
             </Sidebar>
             <main
               className={cn(
-                "flex-1 transition-all duration-300 ease-in-out p-4",
-                collapsed ? "ml-16" : "ml-64"
+                "flex-1 transition-all duration-300 ease-in-out p-4 ml-64"
               )}
             >
               {children}
