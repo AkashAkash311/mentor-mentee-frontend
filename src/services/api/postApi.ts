@@ -41,8 +41,8 @@ export default class PostApis {
         return forgotPasswordRequest;
     }
 
-    static createPost(data: any): CancelablePromise {
-        const createPostRequest = post("/v1/api/posts/createPost", { data });
+    static createPost({ accessToken, data }: PostOptions): CancelablePromise {
+        const createPostRequest = post("/v1/api/posts/createPost", { accessToken , data });
         PostApis.createPostCancel = createPostRequest.cancel;
         return createPostRequest;
     }

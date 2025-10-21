@@ -13,6 +13,30 @@ export default function CreatePostModal({}: CreatePostModalProps) {
   const [title, setTitle] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  const [accessToken, setToken] = useState("");
+
+  useEffect(() => {
+    try {
+      const rootRaw = localStorage.getItem("persist:root");
+      if (!rootRaw) return;
+
+      const rootParsed = JSON.parse(rootRaw);
+      const authRaw = rootParsed?.auth;
+      if (!authRaw) return;
+
+      const authParsed = JSON.parse(authRaw);
+      const token = authParsed?.loginDetails?.token;
+
+      if (token) {
+        setToken(token);
+      } else {
+        console.warn("Token not found in authParsed");
+      }
+    } catch (err) {
+      console.error("Error parsing token from localStorage:", err);
+    }
+  }, []);
+
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -26,9 +50,8 @@ export default function CreatePostModal({}: CreatePostModalProps) {
       const payload = {
         title: title,
         content: content,
-        authorId: "65a7a78c25e3b6a906a201c1",
       };
-      response = await PostApis.createPost(payload);
+      response = await PostApis.createPost({ accessToken, data: payload });
       toast.success(response.data.message);
       setContent("");
       setTitle("");
