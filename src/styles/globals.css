@@ -89,4 +89,8 @@
     color: rgb(156 163 175); /* text-gray-400 */
     pointer-events: none;
   }
+
+  .disabled {
+    @apply opacity-50 cursor-not-allowed pointer-events-none;
+  }
 }

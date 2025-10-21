@@ -69,7 +69,7 @@ export default function CreatePostModal({}: CreatePostModalProps) {
           <Button
             onClick={handlePost}
             disabled={!content.trim() || !title.trim()}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 rounded-lg disabled:bg-white-300"
           >
             Post
           </Button>
