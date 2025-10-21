@@ -1,22 +1,12 @@
 import React, { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Smile, Hash, Link } from "lucide-react";
 interface CreatePostModalProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
   onPost?: (content: string) => void;
 }
 export default function CreatePostModal({
-  open,
-  onOpenChange,
   onPost,
 }: CreatePostModalProps) {
   const [content, setContent] = useState("");
@@ -24,23 +14,13 @@ export default function CreatePostModal({
     if (content.trim()) {
       onPost?.(content);
       setContent("");
-      onOpenChange(false);
     }
   };
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className="backdrop-blur-xl bg-gradient-to-br from-white/60 via-slate-200/70 to-slate-300/60 dark:from-slate-900/60 dark:via-slate-800/70 dark:to-slate-900/60 z-10 sm:max-w-[600px] rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700"
-        style={{
-          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-          border: "1px solid rgba(255, 255, 255, 0.18)",
-        }}
-      >
-        <DialogHeader className="border-b border-slate-200 dark:border-slate-700 pb-3">
-          <DialogTitle className="text-lg font-semibold text-slate-900 dark:text-white">
+    <div className="p-2 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+      <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-3 border-b border-slate-200 dark:border-slate-700 pb-3">
         Create a post
-          </DialogTitle>
-        </DialogHeader>
+      </h2>
         <div className="space-y-4 mt-2">
           <div className="flex gap-3">
         <Avatar className="h-10 w-10">
@@ -58,27 +38,6 @@ export default function CreatePostModal({
           </div>
           <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="hover:bg-slate-100/60 dark:hover:bg-slate-800/60"
-          >
-            <Smile className="h-5 w-5 text-slate-500 dark:text-slate-400" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="hover:bg-slate-100/60 dark:hover:bg-slate-800/60"
-          > 
-            <Hash className="h-5 w-5 text-slate-500 dark:text-slate-400" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="hover:bg-slate-100/60 dark:hover:bg-slate-800/60"
-          > 
-            <Link className="h-5 w-5 text-slate-500 dark:text-slate-400" />
-          </Button>
         </div>
         <Button
           onClick={handlePost}
@@ -89,7 +48,6 @@ export default function CreatePostModal({
         </Button>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+    </div>
   );
 }
